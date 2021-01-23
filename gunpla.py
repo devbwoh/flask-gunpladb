@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_mysqldb import MySQL
 # mysqlclient, flask-mysqldb, simplejson 설치 필요함
 # apt-get install libmysqlclient-dev
@@ -18,17 +18,7 @@ db = MySQL(app)
 
 @app.route("/")
 def index():
-    html = '''
-    <html>
-        <head>
-            <meta charset="utf8"/>
-        </head>
-        <body>
-            \uba4b\uc788\ub294 MG
-        </body>
-    </html>
-    '''
-    return html
+    return render_template('list.html')
 
 
 @app.route("/mechanic", methods=["GET"])
