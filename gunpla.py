@@ -1,6 +1,9 @@
 from flask import Flask, jsonify
 from flask_mysqldb import MySQL
-# pip install simplejson 해줘야 함
+# mysqlclient, flask-mysqldb, simplejson 설치 필요함
+# apt-get install libmysqlclient-dev
+# pip install simplejson flask-mysqldb
+# simplejson은 설치만 해두면 jsonify에서 사용함
 
 app = Flask(__name__)
 
@@ -15,7 +18,17 @@ db = MySQL(app)
 
 @app.route("/")
 def index():
-    return "성공!"
+    html = '''
+    <html>
+        <head>
+            <meta charset="utf8"/>
+        </head>
+        <body>
+            \uba4b\uc788\ub294 MG
+        </body>
+    </html>
+    '''
+    return html
 
 
 @app.route("/mechanic", methods=["GET"])
@@ -33,6 +46,22 @@ def mechanic():
 #     r = Response(response=json.dumps(cur.fetchall()))
 #     r.headers["Content-Type"] = "application/json; charset=utf-8"
 #     return r
+
+
+@app.route("/gunpla", methods=["GET"])
+def gunpla():
+    query = 'select * from gunpla'
+    cur = db.connection.cursor()
+    cur.execute(query)
+    return jsonify(cur.fetchall())
+
+
+@app.route("/image", methods=["GET"])
+def image():
+    query = 'select * from image'
+    cur = db.connection.cursor()
+    cur.execute(query)
+    return jsonify(cur.fetchall())
 
 
 if __name__ == "__main__":
