@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request, redirect
 from flask_mysqldb import MySQL
 # mysqlclient, flask-mysqldb, simplejson 설치 필요함
 # apt-get install libmysqlclient-dev
@@ -55,6 +55,26 @@ def image():
     cur = db.connection.cursor()
     cur.execute(query)
     return jsonify(cur.fetchall())
+
+@app.route("/insert", methods=[ "GET", "POST" ])
+def insert():
+    if request.method == 'GET':
+        return render_template('insert.html')
+    elif request.method == 'POST':
+        query = 'insert into mechanic values (null, %s, %s, %s, %s, %s, %s)'
+        # print(request.form)
+        params = (
+            request.form['name'],
+            request.form['model'],
+            request.form['manufacturer'],
+            request.form['armor'],
+            float(request.form['height']),
+            float(request.form['weight'])
+        )
+        cur = db.connection.cursor()
+        cur.execute(query, params)
+        db.connection.commit()
+        return index()
 
 
 if __name__ == "__main__":
