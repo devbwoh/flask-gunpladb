@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_mysqldb import MySQL
+# pip install simplejson 해줘야 함
 
 app = Flask(__name__)
 
