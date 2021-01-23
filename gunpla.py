@@ -18,7 +18,10 @@ db = MySQL(app)
 
 @app.route("/")
 def index():
-    return render_template('list.html')
+    query = 'select * from mechanic'
+    cur = db.connection.cursor()
+    cur.execute(query)
+    return render_template('list.html', list = cur.fetchall())
 
 
 @app.route("/mechanic", methods=["GET"])

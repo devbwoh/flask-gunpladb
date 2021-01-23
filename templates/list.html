@@ -5,8 +5,11 @@
     </head>
     <body>
         <ul>
-            <li>건담</li>
-            <li>건캐논</li>
+            {% for row in list%}
+            <li>
+                {{row.name}} {{row.height}}
+            </li>
+            {% endfor %}
         </ul>
     </body>
 </html>
